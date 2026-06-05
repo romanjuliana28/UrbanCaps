@@ -1,0 +1,1803 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 20/05/2026, 10:09:23 p. m.
+    Author     : julia
+*/
+/* =========================================================
+   PROYECTO  : Urban Caps
+   ARCHIVO   : estilos.css
+   UBICACIÓN : Web Pages/css/estilos.css
+   DESCRIPCIÓN: Hoja de estilos principal del proyecto.
+                Un solo archivo organizado por secciones
+                que aplica a todos los JSP del sistema.
+
+   ÍNDICE DE SECCIONES:
+   1.  Variables y tema Urban Caps
+   2.  Tipografía — @font-face
+   3.  Reset y estilos base
+   4.  Layout del panel admin (sidebar + contenido)
+   5.  Login — login.jsp
+   6.  Dashboard — admin/dashboard.jsp
+   7.  Componentes compartidos admin (tablas, formularios,
+       botones, alertas) — lista.jsp y formulario.jsp
+   8.  Módulo Privilegios — asignacion.jsp
+   9.  Website público — cliente/index.jsp
+   10. Responsivo — media queries
+   ========================================================= */
+
+
+/* =========================================================
+   SECCIÓN 1 — VARIABLES Y TEMA URBAN CAPS
+   Define los colores, espaciados y valores base del sistema.
+   Cambia una variable aquí y cambia en todo el proyecto.
+   ========================================================= */
+:root {
+    /* Paleta de colores principal */
+    --negro:           #0a0a0a;  /* fondo más oscuro */
+    --gris-oscuro:     #111111;  /* sidebar */
+    --gris-panel:      #161616;  /* header del panel */
+    --gris-card:       #1a1a1a;  /* tarjetas y contenedores */
+    --gris-input:      #222222;  /* campos de formulario */
+    --gris-borde:      #2a2a2a;  /* bordes y separadores */
+    --gris-hover:      #2d2d2d;  /* hover de elementos */
+    --gris-texto:      #a0a0a0;  /* texto secundario */
+    --blanco:          #f0f0f0;  /* texto principal */
+
+    /* Color de marca */
+    --acento:          #e8c547;  /* amarillo dorado — color principal Urban Caps */
+    --acento-hover:    #d4b23c;  /* acento al hacer hover */
+    --acento-suave:    rgba(232, 197, 71, 0.08); /* fondo suave dorado */
+    --acento-borde:    rgba(232, 197, 71, 0.20); /* borde suave dorado */
+
+    /* Colores de estado */
+    --color-exito:     #2ecc71;
+    --color-error:     #e74c3c;
+    --color-alerta:    #f39c12;
+    --color-info:      #3498db;
+
+    /* Fondo de badges de estado */
+    --bg-activo:       rgba(46, 204, 113, 0.12);
+    --bg-inactivo:     rgba(231, 76, 60, 0.12);
+
+    /* Ancho del sidebar del panel admin */
+    --sidebar-ancho:   240px;
+
+    /* Radio de bordes */
+    --radio-sm:        6px;
+    --radio-md:        10px;
+    --radio-lg:        14px;
+    --radio-xl:        20px;
+
+    /* Sombras */
+    --sombra-card:     0 4px 24px rgba(0, 0, 0, 0.4);
+    --sombra-boton:    0 4px 16px rgba(232, 197, 71, 0.25);
+}
+
+
+/* =========================================================
+   SECCIÓN 2 — TIPOGRAFÍA
+   Declara las fuentes descargadas localmente.
+   Los JSP NO usan Google Fonts (sin internet necesario).
+   Bebas Neue → títulos y nombre de marca.
+   Inter       → todo el cuerpo de texto.
+   ========================================================= */
+
+/* Fuente de marca: Bebas Neue */
+@font-face {
+    font-family: 'Bebas Neue';
+    /* La ruta ../fonts/ sube un nivel desde css/ hasta Web Pages/
+       y luego entra a la carpeta fonts/ */
+    src: url('../fonts/BebasNeue-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    /* font-display: swap evita que el texto sea invisible mientras carga */
+    font-display: swap;
+}
+
+/* Fuente de cuerpo: Inter Regular */
+@font-face {
+    font-family: 'Inter';
+    src: url('../fonts/Inter_18pt-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Inter Medium — para labels y subtítulos */
+@font-face {
+    font-family: 'Inter';
+    src: url('../fonts/Inter_18pt-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Inter SemiBold — para botones y títulos de sección */
+@font-face {
+    font-family: 'Inter';
+    src: url('../fonts/Inter_18pt-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Inter Bold — para encabezados principales */
+@font-face {
+    font-family: 'Inter';
+    src: url('../fonts/Inter_18pt-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+/* =========================================================
+   SECCIÓN 3 — RESET Y ESTILOS BASE
+   Normaliza los estilos entre navegadores y define
+   la base visual del proyecto.
+   Aplica a: TODOS los JSP
+   ========================================================= */
+
+/* Reset universal */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Configuración base del documento */
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+/* Estilos base del cuerpo */
+body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    background-color: var(--negro);
+    color: var(--blanco);
+    line-height: 1.5;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased; /* texto más nítido en pantallas retina */
+}
+
+/* Elimina el subrayado de los enlaces y hereda el color */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: var(--acento);
+}
+
+/* Imágenes responsivas por defecto */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Listas sin estilo por defecto */
+ul, ol {
+    list-style: none;
+}
+
+/* Botones heredan la fuente del proyecto */
+button, input, select, textarea {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Placeholder de los campos de formulario */
+::placeholder {
+    color: var(--gris-borde);
+    opacity: 1;
+}
+
+/* Barra de desplazamiento personalizada */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--negro);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gris-borde);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gris-hover);
+}
+
+
+/* =========================================================
+   SECCIÓN 4 — LAYOUT DEL PANEL ADMIN
+   Estructura principal del panel de administración:
+   sidebar fijo a la izquierda + contenido a la derecha.
+   Aplica a: dashboard.jsp y todos los admin/*.jsp
+   ========================================================= */
+
+/* Contenedor raíz del panel admin */
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* --- SIDEBAR --- */
+
+/* Contenedor del sidebar fijo */
+.sidebar {
+    width: var(--sidebar-ancho);
+    background: var(--gris-oscuro);
+    border-right: 1px solid var(--gris-borde);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    transition: transform 0.3s ease; /* animación para móvil */
+    overflow-y: auto;
+}
+
+/* Logo del sidebar */
+.sidebar-logo {
+    padding: 22px 18px;
+    border-bottom: 1px solid var(--gris-borde);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+/* Cuadro dorado con el ícono de la gorra */
+.sidebar-logo-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--acento);
+    border-radius: var(--radio-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+/* Texto del logo */
+.sidebar-logo-texto {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--blanco);
+    line-height: 1;
+}
+
+.sidebar-logo-sub {
+    font-size: 9px;
+    color: #444;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+/* Navegación del sidebar */
+.sidebar-nav {
+    flex: 1;
+    padding: 14px 10px;
+    overflow-y: auto;
+}
+
+/* Título de grupo de menú */
+.nav-grupo-titulo {
+    font-size: 10px;
+    font-weight: 600;
+    color: #444;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 10px 10px 4px;
+    margin-top: 6px;
+}
+
+/* Cada ítem del menú */
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--radio-sm);
+    color: #666;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 2px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+    border-left: 2px solid transparent;
+}
+
+/* Hover del ítem de menú */
+.nav-item:hover {
+    background: var(--acento-suave);
+    color: var(--acento);
+    border-left-color: var(--acento);
+}
+
+/* Ítem activo — página actual */
+.nav-item.activo {
+    background: var(--acento-suave);
+    color: var(--acento);
+    border-left-color: var(--acento);
+}
+
+/* Ícono dentro del ítem */
+.nav-item i {
+    font-size: 16px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* Pie del sidebar — info y logout del usuario */
+.sidebar-footer {
+    padding: 14px;
+    border-top: 1px solid var(--gris-borde);
+    flex-shrink: 0;
+}
+
+/* Fila de información del usuario */
+.usuario-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+/* Avatar circular con inicial del nombre */
+.usuario-avatar {
+    width: 34px;
+    height: 34px;
+    background: var(--acento);
+    color: var(--negro);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+/* Nombre del usuario */
+.usuario-nombre {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blanco);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Rol del usuario */
+.usuario-rol {
+    font-size: 11px;
+    color: #555;
+}
+
+/* Botón de cerrar sesión */
+.btn-logout {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: var(--radio-sm);
+    border: 1px solid var(--gris-borde);
+    background: transparent;
+    color: #666;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+    background: rgba(231, 76, 60, 0.08);
+    border-color: rgba(231, 76, 60, 0.3);
+    color: var(--color-error);
+}
+
+/* --- CONTENIDO PRINCIPAL --- */
+
+/* Área de contenido a la derecha del sidebar */
+.main-content {
+    margin-left: var(--sidebar-ancho);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #0f0f0f;
+}
+
+/* Header superior del panel */
+.top-header {
+    background: var(--gris-panel);
+    border-bottom: 1px solid var(--gris-borde);
+    padding: 16px 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+/* Título de la página en el header */
+.header-titulo {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--blanco);
+}
+
+/* Ruta de navegación (breadcrumb) */
+.header-ruta {
+    font-size: 12px;
+    color: #555;
+    margin-top: 2px;
+}
+
+/* Reloj en el header */
+.header-reloj {
+    font-size: 12px;
+    color: #555;
+}
+
+/* Área de contenido con padding */
+.content-area {
+    padding: 26px;
+    flex: 1;
+}
+
+
+/* =========================================================
+   SECCIÓN 5 — LOGIN
+   Estilos exclusivos de login.jsp.
+   Página de inicio de sesión del sistema.
+   ========================================================= */
+
+/* Cuerpo del login — centra verticalmente */
+.login-body {
+    background-color: var(--negro);
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(255, 255, 255, 0.015) 40px,
+        rgba(255, 255, 255, 0.015) 41px
+    );
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Contenedor del formulario de login */
+.login-wrapper {
+    width: 100%;
+    max-width: 420px;
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+/* Sección de marca arriba del formulario */
+.login-brand {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Ícono de gorra dorado */
+.login-brand-icon {
+    width: 62px;
+    height: 62px;
+    background: var(--acento);
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 14px;
+    box-shadow: 0 0 30px rgba(232, 197, 71, 0.3);
+}
+
+/* Nombre de la marca */
+.login-brand-nombre {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--blanco);
+    letter-spacing: 4px;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+/* Subtítulo de la marca */
+.login-brand-sub {
+    font-size: 11px;
+    color: #555;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+/* Tarjeta del formulario */
+.login-card {
+    background: var(--gris-card);
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio-xl);
+    padding: 34px;
+    box-shadow: var(--sombra-card);
+}
+
+/* Título dentro de la tarjeta */
+.login-titulo {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--blanco);
+    margin-bottom: 5px;
+}
+
+/* Descripción del formulario */
+.login-desc {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 26px;
+}
+
+/* Grupo de campo con ícono */
+.login-campo-grupo {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+/* Label del campo */
+.login-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: #888;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 7px;
+}
+
+/* Ícono dentro del campo */
+.login-campo-icono {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555;
+    font-size: 15px;
+    z-index: 1;
+    transition: color 0.2s ease;
+    pointer-events: none;
+}
+
+/* Campo de texto del login */
+.login-input {
+    width: 100%;
+    background: var(--gris-input);
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio-md);
+    color: var(--blanco);
+    font-size: 14px;
+    padding: 12px 14px 12px 40px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-input:focus {
+    border-color: var(--acento);
+    box-shadow: 0 0 0 3px rgba(232, 197, 71, 0.1);
+}
+
+/* Ícono del campo activo */
+.login-campo-grupo:focus-within .login-campo-icono {
+    color: var(--acento);
+}
+
+/* Botón mostrar/ocultar contraseña */
+.login-toggle-pwd {
+    position: absolute;
+    right: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #555;
+    cursor: pointer;
+    font-size: 15px;
+    padding: 0;
+    z-index: 2;
+    transition: color 0.2s ease;
+}
+
+.login-toggle-pwd:hover {
+    color: var(--acento);
+}
+
+/* Botón principal de ingreso */
+.login-btn {
+    width: 100%;
+    background: var(--acento);
+    color: var(--negro);
+    border: none;
+    border-radius: var(--radio-md);
+    padding: 13px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.login-btn:hover {
+    background: var(--acento-hover);
+    box-shadow: var(--sombra-boton);
+}
+
+.login-btn:active {
+    transform: scale(0.98);
+}
+
+/* Pie del login */
+.login-footer {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 12px;
+    color: #444;
+    border-top: 1px solid var(--gris-borde);
+    padding-top: 18px;
+}
+
+/* Animación de entrada del formulario */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Animación de sacudida para mensajes de error */
+@keyframes sacudir {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-6px); }
+    40%       { transform: translateX(6px); }
+    60%       { transform: translateX(-4px); }
+    80%       { transform: translateX(4px); }
+}
+
+
+/* =========================================================
+   SECCIÓN 6 — DASHBOARD
+   Estilos de la página principal del panel admin.
+   Aplica a: admin/dashboard.jsp
+   ========================================================= */
+
+/* Banner de bienvenida */
+.dashboard-banner {
+    background: var(--gris-card);
+    border: 1px solid var(--gris-borde);
+    border-left: 3px solid var(--acento);
+    border-radius: var(--radio-lg);
+    padding: 22px 26px;
+    margin-bottom: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.dashboard-banner-titulo {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--blanco);
+    margin-bottom: 4px;
+}
+
+.dashboard-banner-desc {
+    font-size: 13px;
+    color: #666;
+}
+
+/* Badge de sesión activa */
+.badge-sesion {
+    background: var(--acento-suave);
+    border: 1px solid var(--acento-borde);
+    color: var(--acento);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Etiqueta de sección */
+.seccion-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #444;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+/* Grid de tarjetas de módulos */
+.modulos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 14px;
+    margin-bottom: 26px;
+}
+
+/* Tarjeta de módulo */
+.modulo-card {
+    background: var(--gris-card);
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio-lg);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+.modulo-card:hover {
+    border-color: var(--acento);
+    background: var(--acento-suave);
+    transform: translateY(-2px);
+}
+
+/* Ícono de la tarjeta de módulo */
+.modulo-icono {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radio-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+}
+
+.modulo-nombre {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blanco);
+}
+
+.modulo-desc {
+    font-size: 11px;
+    color: #555;
+    line-height: 1.4;
+}
+
+.modulo-flecha {
+    font-size: 12px;
+    color: #444;
+    align-self: flex-end;
+    transition: color 0.2s ease;
+}
+
+.modulo-card:hover .modulo-flecha {
+    color: var(--acento);
+}
+
+/* Colores de íconos por módulo */
+.icono-morado { background: rgba(130, 80, 255, 0.12); color: #8250ff; }
+.icono-azul   { background: rgba(56, 139, 253, 0.12); color: #388bfd; }
+.icono-verde  { background: rgba(46, 204, 113, 0.12); color: #2ecc71; }
+.icono-dorado { background: rgba(232, 197, 71, 0.12); color: #e8c547; }
+.icono-rojo   { background: rgba(231, 76, 60, 0.12);  color: #e74c3c; }
+.icono-teal   { background: rgba(26, 188, 156, 0.12); color: #1abc9c; }
+
+/* Tarjeta de acceso al website */
+.website-card {
+    background: var(--gris-card);
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio-lg);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    gap: 16px;
+}
+
+.website-card:hover {
+    border-color: var(--acento);
+    background: var(--acento-suave);
+}
+
+.website-card-icono {
+    width: 46px;
+    height: 46px;
+    background: var(--acento-suave);
+    border: 1px solid var(--acento-borde);
+    border-radius: var(--radio-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--acento);
+    flex-shrink: 0;
+}
+
+.website-card-titulo {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--blanco);
+    margin-bottom: 3px;
+}
+
+.website-card-desc {
+    font-size: 12px;
+    color: #555;
+}
+
+/* Botón visitar website */
+.btn-visitar {
+    background: var(--acento);
+    color: var(--negro);
+    border: none;
+    border-radius: var(--radio-sm);
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.2s ease;
+}
+
+.btn-visitar:hover {
+    background: var(--acento-hover);
+}
+
+
+/* =========================================================
+   SECCIÓN 7 — COMPONENTES COMPARTIDOS DEL ADMIN
+   Estilos reutilizables en TODOS los módulos admin.
+   Aplica a: lista.jsp y formulario.jsp de cada módulo.
+   ========================================================= */
+
+/* --- Contenedor de página --- */
+
+/* Tarjeta principal de la página */
+.pagina-card {
+    background: var(--gris-card);
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio-lg);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+/* Header de la tarjeta con título y botón nuevo */
+.pagina-card-header {
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--gris-borde);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.pagina-card-titulo {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--blanco);
+}
+
+.pagina-card-desc {
+    font-size: 12px;
+    color: #555;
+    margin-top: 2px;
+}
+
+/* --- Botones de acción --- */
+
+/* Botón nuevo registro */
+.btn-nuevo {
+    background: var(--acento);
+    color: var(--negro);
+    border: none;
+    border-radius: var(--radio-sm);
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-nuevo:hover {
+    background: var(--acento-hover);
+    box-shadow: var(--sombra-boton);
+}
+
+/* Botón editar (azul) */
+.btn-editar {
+    background: rgba(56, 139, 253, 0.12);
+    color: #388bfd;
+    border: 1px solid rgba(56, 139, 253, 0.2);
+    border-radius: var(--radio-sm);
+    padding: 5px 11px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s ease;
+}
+
+.btn-editar:hover {
+    background: rgba(56, 139, 253, 0.22);
+    border-color: rgba(56, 139, 253, 0.4);
+}
+
+/* Botón eliminar/desactivar (rojo) */
+.btn-eliminar {
+    background: rgba(231, 76, 60, 0.10);
+    color: var(--color-error);
+    border: 1px solid rgba(231, 76, 60, 0.2);
+    border-radius: var(--radio-sm);
+    padding: 5px 11px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s ease;
+}
+
+.btn-eliminar:hover {
+    background: rgba(231, 76, 60, 0.20);
+    border-color: rgba(231, 76, 60, 0.4);
+}
+
+/* Botón guardar formulario */
+.btn-guardar {
+    background: var(--acento);
+    color: var(--negro);
+    border: none;
+    border-radius: var(--radio-sm);
+    padding: 10px 22px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-guardar:hover {
+    background: var(--acento-hover);
+    box-shadow: var(--sombra-boton);
+}
+
+/* Botón cancelar formulario */
+.btn-cancelar {
+    background: transparent;
+    color: #666;
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio-sm);
+    padding: 10px 22px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    transition: all 0.2s ease;
+}
+
+.btn-cancelar:hover {
+    background: var(--gris-hover);
+    color: var(--blanco);
+}
+
+/* Fila de botones del formulario */
+.botones-form {
+    display: flex;
+    gap: 10px;
+    padding: 18px 22px;
+    border-top: 1px solid var(--gris-borde);
+}
+
+/* --- Tabla de lista --- */
+
+/* Contenedor de la tabla con scroll horizontal en móvil */
+.tabla-contenedor {
+    overflow-x: auto;
+}
+
+/* Tabla principal de registros */
+.tabla-admin {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+/* Encabezado de la tabla */
+.tabla-admin thead tr {
+    border-bottom: 1px solid var(--gris-borde);
+}
+
+.tabla-admin thead th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    color: #555;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* Filas del cuerpo de la tabla */
+.tabla-admin tbody tr {
+    border-bottom: 1px solid var(--gris-borde);
+    transition: background 0.15s ease;
+}
+
+.tabla-admin tbody tr:hover {
+    background: var(--gris-hover);
+}
+
+.tabla-admin tbody tr:last-child {
+    border-bottom: none;
+}
+
+.tabla-admin tbody td {
+    padding: 12px 16px;
+    color: var(--gris-texto);
+    vertical-align: middle;
+}
+
+/* Columna de acciones (editar, eliminar) */
+.tabla-admin .col-acciones {
+    text-align: right;
+    white-space: nowrap;
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+}
+
+/* Mensaje cuando la tabla no tiene registros */
+.tabla-vacia {
+    text-align: center;
+    padding: 40px 20px;
+    color: #444;
+    font-size: 13px;
+}
+
+/* Barra de búsqueda de la lista */
+.lista-buscador {
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--gris-borde);
+    display: flex;
+    gap: 8px;
+}
+
+.buscador-input {
+    flex: 1;
+    background: var(--gris-input);
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio-sm);
+    color: var(--blanco);
+    font-size: 13px;
+    padding: 8px 12px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.buscador-input:focus {
+    border-color: var(--acento);
+}
+
+.btn-buscar {
+    background: var(--gris-hover);
+    color: var(--gris-texto);
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio-sm);
+    padding: 8px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-buscar:hover {
+    background: var(--acento-suave);
+    color: var(--acento);
+    border-color: var(--acento-borde);
+}
+
+/* --- Badges de estado --- */
+
+/* Base de los badges */
+.badge-estado {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* Badge activo — verde */
+.badge-activo {
+    background: var(--bg-activo);
+    color: var(--color-exito);
+}
+
+/* Badge inactivo — rojo */
+.badge-inactivo {
+    background: var(--bg-inactivo);
+    color: var(--color-error);
+}
+
+/* --- Alertas / Mensajes --- */
+
+/* Base de las alertas */
+.alerta {
+    padding: 12px 16px;
+    border-radius: var(--radio-md);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+/* Alerta de éxito — verde */
+.alerta-exito {
+    background: rgba(46, 204, 113, 0.08);
+    border: 1px solid rgba(46, 204, 113, 0.2);
+    color: var(--color-exito);
+}
+
+/* Alerta de error — rojo */
+.alerta-error {
+    background: rgba(231, 76, 60, 0.08);
+    border: 1px solid rgba(231, 76, 60, 0.2);
+    color: var(--color-error);
+    animation: sacudir 0.4s ease;
+}
+
+/* --- Formulario --- */
+
+/* Cuerpo del formulario */
+.form-cuerpo {
+    padding: 22px;
+}
+
+/* Grupo de campo del formulario */
+.form-grupo {
+    margin-bottom: 18px;
+}
+
+/* Label del campo */
+.form-etiqueta {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #888;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    margin-bottom: 7px;
+}
+
+/* Campo de texto del formulario */
+.form-campo {
+    width: 100%;
+    background: var(--gris-input);
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio-sm);
+    color: var(--blanco);
+    font-size: 13px;
+    padding: 10px 13px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-campo:focus {
+    border-color: var(--acento);
+    box-shadow: 0 0 0 3px rgba(232, 197, 71, 0.08);
+}
+
+/* Select (lista desplegable) */
+select.form-campo {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16'%3E%3Cpath fill='%23666' d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 13px center;
+    padding-right: 34px;
+}
+
+/* Textarea */
+textarea.form-campo {
+    resize: vertical;
+    min-height: 90px;
+}
+
+/* Grid de dos columnas en formulario */
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* Texto de ayuda debajo del campo */
+.form-ayuda {
+    font-size: 11px;
+    color: #555;
+    margin-top: 5px;
+}
+
+
+/* =========================================================
+   SECCIÓN 8 — MÓDULO PRIVILEGIOS — ASIGNACIÓN
+   Estilos del panel de checkboxes para asignar
+   privilegios a un rol.
+   Aplica a: admin/privilegios/asignacion.jsp
+   ========================================================= */
+
+/* Tarjeta de un grupo de módulo */
+.modulo-grupo {
+    background: var(--gris-input);
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio-lg);
+    margin-bottom: 14px;
+    overflow: hidden;
+}
+
+/* Header del grupo de módulo */
+.modulo-grupo-header {
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--gris-borde);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modulo-grupo-titulo {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blanco);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Grid de checkboxes del módulo */
+.modulo-grupo-items {
+    padding: 14px 18px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+}
+
+/* Ítem de privilegio con checkbox */
+.privilegio-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--gris-card);
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.privilegio-item:hover {
+    border-color: var(--acento-borde);
+    background: var(--acento-suave);
+}
+
+/* Checkbox personalizado */
+.privilegio-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--acento);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Nombre del privilegio */
+.privilegio-nombre {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gris-texto);
+    line-height: 1.4;
+}
+
+/* Descripción del privilegio */
+.privilegio-desc {
+    font-size: 11px;
+    color: #555;
+    margin-top: 2px;
+}
+
+/* Ítem marcado */
+.privilegio-item:has(input:checked) {
+    border-color: var(--acento-borde);
+    background: var(--acento-suave);
+}
+
+.privilegio-item:has(input:checked) .privilegio-nombre {
+    color: var(--acento);
+}
+
+
+/* =========================================================
+   SECCIÓN 9 — WEBSITE PÚBLICO
+   Estilos del catálogo visible al cliente.
+   Aplica a: cliente/index.jsp
+   ========================================================= */
+
+/* Cuerpo del website */
+.web-body {
+    background: #0f0f0f;
+    color: var(--blanco);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+}
+
+/* --- Header del website --- */
+
+.web-header {
+    background: var(--negro);
+    border-bottom: 1px solid var(--gris-borde);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Barra superior del header */
+.web-header-top {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Logo del website */
+.web-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    letter-spacing: 3px;
+    color: var(--blanco);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.web-logo-icon {
+    font-size: 22px;
+}
+
+/* Buscador del website */
+.web-buscador {
+    display: flex;
+    flex: 1;
+    max-width: 480px;
+    gap: 0;
+}
+
+.web-buscador-input {
+    flex: 1;
+    background: var(--gris-input);
+    border: 1px solid var(--gris-borde);
+    border-right: none;
+    border-radius: var(--radio-sm) 0 0 var(--radio-sm);
+    color: var(--blanco);
+    font-size: 13px;
+    padding: 9px 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.web-buscador-input:focus {
+    border-color: var(--acento);
+}
+
+.web-buscador-btn {
+    background: var(--acento);
+    color: var(--negro);
+    border: none;
+    border-radius: 0 var(--radio-sm) var(--radio-sm) 0;
+    padding: 9px 16px;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.web-buscador-btn:hover {
+    background: var(--acento-hover);
+}
+
+/* --- Barra de categorías del website --- */
+
+.web-categorias {
+    border-top: 1px solid var(--gris-borde);
+}
+
+.web-categorias-lista {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+}
+
+/* Botón de categoría */
+.web-categoria-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #666;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.web-categoria-btn:hover {
+    color: var(--blanco);
+}
+
+/* Categoría seleccionada */
+.web-categoria-btn.activa {
+    color: var(--acento);
+    border-bottom-color: var(--acento);
+}
+
+/* --- Contenido principal del website --- */
+
+.web-contenido {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px;
+}
+
+/* Título de sección de resultados */
+.web-seccion-titulo {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--blanco);
+    margin-bottom: 6px;
+}
+
+.web-seccion-sub {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 28px;
+}
+
+/* Grid de productos */
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+/* --- Tarjeta de producto --- */
+
+.producto-card {
+    background: var(--gris-card);
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.producto-card:hover {
+    border-color: var(--gris-hover);
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-card);
+}
+
+/* Imagen del producto */
+.producto-imagen-contenedor {
+    aspect-ratio: 4/3;
+    background: var(--gris-input);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.producto-imagen {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.producto-card:hover .producto-imagen {
+    transform: scale(1.04);
+}
+
+/* Placeholder si no hay imagen */
+.producto-sin-imagen {
+    font-size: 50px;
+    opacity: 0.3;
+}
+
+/* Badge de categoría sobre la imagen */
+.producto-categoria-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: var(--acento);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Información del producto */
+.producto-info {
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.producto-titulo {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--blanco);
+    line-height: 1.3;
+}
+
+.producto-descripcion {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;      /* máximo 2 líneas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Fila inferior: precio y botón */
+.producto-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--gris-borde);
+}
+
+.producto-precio {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--acento);
+}
+
+/* Botón de comprar por WhatsApp */
+.btn-whatsapp {
+    background: #25D366;
+    color: #fff;
+    border: none;
+    border-radius: var(--radio-sm);
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s ease, transform 0.1s ease;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.btn-whatsapp:hover {
+    background: #1da851;
+    color: #fff;
+}
+
+.btn-whatsapp:active {
+    transform: scale(0.97);
+}
+
+/* Mensaje sin resultados en la búsqueda */
+.web-sin-resultados {
+    text-align: center;
+    padding: 60px 20px;
+    color: #444;
+}
+
+.web-sin-resultados i {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 14px;
+    opacity: 0.5;
+}
+
+.web-sin-resultados p {
+    font-size: 15px;
+    margin-bottom: 6px;
+    color: #555;
+}
+
+.web-sin-resultados span {
+    font-size: 13px;
+    color: #444;
+}
+
+/* --- Footer del website --- */
+
+.web-footer {
+    background: var(--negro);
+    border-top: 1px solid var(--gris-borde);
+    padding: 24px;
+    text-align: center;
+    font-size: 12px;
+    color: #444;
+    margin-top: 40px;
+}
+
+
+/* =========================================================
+   SECCIÓN 10 — RESPONSIVO — MEDIA QUERIES
+   Ajustes para pantallas pequeñas (tabletas y móviles).
+   Aplica a: TODOS los JSP
+   ========================================================= */
+
+/* Tabletas — hasta 992px */
+@media (max-width: 992px) {
+
+    /* Grid de módulos del dashboard */
+    .modulos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Grid de productos del website */
+    .productos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Formulario de dos columnas pasa a una */
+    .form-grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Móviles — hasta 768px */
+@media (max-width: 768px) {
+
+    /* El sidebar se oculta y aparece solo cuando se activa */
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.abierto {
+        transform: translateX(0);
+    }
+
+    /* El contenido ocupa todo el ancho */
+    .main-content {
+        margin-left: 0;
+    }
+
+    /* Header del panel ajustado */
+    .top-header {
+        padding: 12px 16px;
+    }
+
+    /* Área de contenido con menos padding */
+    .content-area {
+        padding: 16px;
+    }
+
+    /* Header del website en columna */
+    .web-header-top {
+        flex-wrap: wrap;
+        padding: 14px 16px;
+        gap: 12px;
+    }
+
+    .web-buscador {
+        width: 100%;
+        max-width: 100%;
+        order: 3;
+    }
+
+    /* Banner del dashboard en columna */
+    .dashboard-banner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* Módulos del dashboard en una columna */
+    .modulos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Website card en columna */
+    .website-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* Móviles pequeños — hasta 480px */
+@media (max-width: 480px) {
+
+    /* Login más compacto */
+    .login-card {
+        padding: 22px 18px;
+    }
+
+    .login-brand-nombre {
+        font-size: 32px;
+    }
+
+    /* Header del panel compactado */
+    .header-titulo {
+        font-size: 15px;
+    }
+
+    /* Productos en una columna */
+    .productos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Privilegios en una columna */
+    .modulo-grupo-items {
+        grid-template-columns: 1fr;
+    }
+}
